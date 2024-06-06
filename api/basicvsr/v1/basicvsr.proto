@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package basicvsr.v1;
+
+import "google/api/annotations.proto";
+
+option go_package = "basic-vsr-web-client/api/basicvsr/v1;v1";
+option java_multiple_files = true;
+option java_package = "dev.kratos.api.basicvsr.v1";
+option java_outer_classname = "BasicvsrProtoV1";
+
+// The greeting service definition.
+service BasicVSR {
+  // Sends a greeting
+  rpc GetStatus (GPURequest) returns (GPUReply) {
+    option (google.api.http) = {
+      get: "/basicvsr"
+    };
+  }
+
+  rpc ExecBasicVsr (GPURequest) returns (ExecReply) {
+    option (google.api.http) = {
+      get: "/basicvsr/exec/{name}"
+    };
+  }
+}
+
+// The request message containing the user's name.
+message GPURequest {
+  string name = 1;
+}
+
+// The response message containing the greetings
+message GPUReply {
+  string productName = 1;
+  string power = 2;
+  string fan = 3;
+  string memory = 4;
+}
+
+message ExecReply {
+  string message = 1;
+}
