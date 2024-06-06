@@ -118,9 +118,9 @@ func (uc *BasicVSRUsecase) ExecBasicVsr(ctx context.Context, g *GPURequest) (*Ex
 		"cd /root/pytorch-env",
 		"source ./larry/bin/activate",
 		"cd ./RealBasicVSR/fork/RealBasicVSR",
-		"python inference_realbasicvsr_fixMem.py configs/realbasicvsr_x4.py checkpoints/RealBasicVSR_x4.pth data/input.mp4 results/output111.mp4 --fps=30 --max_seq_len=20 --split=3")
+		"python inference_realbasicvsr_fixMem.py configs/realbasicvsr_x4.py checkpoints/RealBasicVSR_x4.pth data/input3.mp4 results/output333.mp4 --fps=30 --max_seq_len=20 --split=3")
 
-	cmd := exec.Command(command)
+	cmd := exec.Command("/bin/sh", "-c", command)
 	output, err := cmd.Output()
 
 	if err != nil {
