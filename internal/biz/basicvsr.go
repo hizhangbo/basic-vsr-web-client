@@ -75,8 +75,6 @@ func NewBasicVSRUsecase(repo BasicVSRRepo, logger log.Logger) *BasicVSRUsecase {
 
 // CreateBasicVSR creates a BasicVSR, and returns the new BasicVSR.
 func (uc *BasicVSRUsecase) GetStatus(ctx context.Context, g *BasicVSR) (*BasicVSR, error) {
-	uc.log.WithContext(ctx).Infof("CreateBasicVSR: %v", g.ProductName)
-
 	cmd := exec.Command("nvidia-smi", "-x", "-q")
 	output, err := cmd.Output()
 
@@ -118,7 +116,7 @@ func (uc *BasicVSRUsecase) ExecBasicVsr(ctx context.Context, g *GPURequest) (*Ex
 		"cd /root/pytorch-env",
 		"source ./larry/bin/activate",
 		"cd ./RealBasicVSR/fork/RealBasicVSR",
-		"python inference_realbasicvsr_fixMem.py configs/realbasicvsr_x4.py checkpoints/RealBasicVSR_x4.pth data/input3.mp4 results/output333.mp4 --fps=30 --max_seq_len=20 --split=3")
+		"nohup python inference_realbasicvsr_fixMem.py configs/realbasicvsr_x4.py checkpoints/RealBasicVSR_x4.pth data/input3.mp4 results/output333.mp4 --fps=30 --max_seq_len=20 --split=3 > /root/pytorch-env/RealBasicVSR/fork/RealBasicVSR/console.log 2>&1 &")
 
 	cmd := exec.Command("/bin/sh", "-c", command)
 	output, err := cmd.Output()
